@@ -2,7 +2,7 @@
 
 | Host | Version | State | Notes |
 | --- | --- | --- | --- |
-| New ChatGPT desktop app (Windows x64) | Not validated | Unsupported | The local development machine had version 26.1002.7124.0 installed on 2026-10-09. No CDP listener was visible in the ordinary running session. No restart or special debug launch was attempted because the app was active. |
+| New ChatGPT desktop app (Windows x64) | Not validated | Unsupported | Read-only inspection on 2026-10-10 found `ChatGPT.exe` file version `155.0.8059.40` running in 8 processes. None had a `--remote-debugging-port` argument or a listening TCP port. The active app was not restarted or relaunched with debugging enabled. |
 
 The adapter remains fail-closed until all three views (Chat, Work, Codex) and restore behavior pass an end-to-end check on a specific build. The current `UnverifiedHostAdapter` never inspects or modifies the client DOM.
 
