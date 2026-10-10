@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeStudio", "src\ThemeStudio\ThemeStudio.csproj", "{E8145C77-B58A-4DB0-A1AC-1CF8ABDBB616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeStudio.Core", "src\ThemeStudio.Core\ThemeStudio.Core.csproj", "{ABCB1B4A-016D-4CF2-A160-64D37556AB0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeStudio.Tests", "tests\ThemeStudio.Tests\ThemeStudio.Tests.csproj", "{FD14A0C4-444F-4AE6-8A1E-1D5DE8A5936B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8145C77-B58A-4DB0-A1AC-1CF8ABDBB616}.Debug|x64.ActiveCfg = Debug|x64
+		{E8145C77-B58A-4DB0-A1AC-1CF8ABDBB616}.Debug|x64.Build.0 = Debug|x64
+		{E8145C77-B58A-4DB0-A1AC-1CF8ABDBB616}.Release|x64.ActiveCfg = Release|x64
+		{E8145C77-B58A-4DB0-A1AC-1CF8ABDBB616}.Release|x64.Build.0 = Release|x64
+		{ABCB1B4A-016D-4CF2-A160-64D37556AB0D}.Debug|x64.ActiveCfg = Debug|x64
+		{ABCB1B4A-016D-4CF2-A160-64D37556AB0D}.Debug|x64.Build.0 = Debug|x64
+		{ABCB1B4A-016D-4CF2-A160-64D37556AB0D}.Release|x64.ActiveCfg = Release|x64
+		{ABCB1B4A-016D-4CF2-A160-64D37556AB0D}.Release|x64.Build.0 = Release|x64
+		{FD14A0C4-444F-4AE6-8A1E-1D5DE8A5936B}.Debug|x64.ActiveCfg = Debug|x64
+		{FD14A0C4-444F-4AE6-8A1E-1D5DE8A5936B}.Debug|x64.Build.0 = Debug|x64
+		{FD14A0C4-444F-4AE6-8A1E-1D5DE8A5936B}.Release|x64.ActiveCfg = Release|x64
+		{FD14A0C4-444F-4AE6-8A1E-1D5DE8A5936B}.Release|x64.Build.0 = Release|x64
+    EndGlobalSection
+EndGlobal

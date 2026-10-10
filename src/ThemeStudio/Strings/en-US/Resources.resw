@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="BrandTitle.Text" xml:space="preserve">
+    <value>Theme Studio</value>
+  </data>
+  <data name="BrandSubtitle.Text" xml:space="preserve">
+    <value>CHATGPT DESKTOP</value>
+  </data>
+  <data name="WorkspaceLabel.Text" xml:space="preserve">
+    <value>WORKSPACE</value>
+  </data>
+  <data name="ChatView.Content" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="WorkView.Content" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="CodexView.Content" xml:space="preserve">
+    <value>Codex</value>
+  </data>
+  <data name="SyncViewsButton.Content" xml:space="preserve">
+    <value>Sync theme across views</value>
+  </data>
+  <data name="LiveAdapterTitle.Text" xml:space="preserve">
+    <value>Live adapter</value>
+  </data>
+  <data name="ImportThemeButton.Content" xml:space="preserve">
+    <value>Import theme</value>
+  </data>
+  <data name="ExportThemeButton.Content" xml:space="preserve">
+    <value>Export theme</value>
+  </data>
+  <data name="EditorTitle.Text" xml:space="preserve">
+    <value>Theme editor</value>
+  </data>
+  <data name="EditorSubtitle.Text" xml:space="preserve">
+    <value>Create a look for this workspace view.</value>
+  </data>
+  <data name="ThemeSection.Text" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ThemeNameBox.Header" xml:space="preserve">
+    <value>Theme name</value>
+  </data>
+  <data name="BackgroundSection.Text" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="BackgroundKindBox.Header" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="SolidBackground.Content" xml:space="preserve">
+    <value>Solid color</value>
+  </data>
+  <data name="GradientBackground.Content" xml:space="preserve">
+    <value>Gradient</value>
+  </data>
+  <data name="ImageBackground.Content" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="VideoBackground.Content" xml:space="preserve">
+    <value>Video (MP4 / WebM)</value>
+  </data>
+  <data name="BackgroundColorBox.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="GradientEndBox.Header" xml:space="preserve">
+    <value>Gradient end</value>
+  </data>
+  <data name="BackgroundFileBox.Header" xml:space="preserve">
+    <value>Local media</value>
+  </data>
+  <data name="BackgroundFileBox.PlaceholderText" xml:space="preserve">
+    <value>No media selected</value>
+  </data>
+  <data name="ChooseFileButton.Content" xml:space="preserve">
+    <value>Choose file</value>
+  </data>
+  <data name="PausePreviewButton.Content" xml:space="preserve">
+    <value>Pause preview</value>
+  </data>
+  <data name="FitBox.Header" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="SelectedSurfaceTitle.Text" xml:space="preserve">
+    <value>Selected surface</value>
+  </data>
+  <data name="SurfaceBox.Header" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="SidebarRegion.Content" xml:space="preserve">
+    <value>Sidebar</value>
+  </data>
+  <data name="TitlebarRegion.Content" xml:space="preserve">
+    <value>Title bar</value>
+  </data>
+  <data name="ContentRegion.Content" xml:space="preserve">
+    <value>Content / conversation</value>
+  </data>
+  <data name="ComposerRegion.Content" xml:space="preserve">
+    <value>Composer</value>
+  </data>
+  <data name="MenusRegion.Content" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="CardsRegion.Content" xml:space="preserve">
+    <value>Cards</value>
+  </data>
+  <data name="ControlsRegion.Content" xml:space="preserve">
+    <value>Buttons and controls</value>
+  </data>
+  <data name="SurfaceBackgroundBox.Header" xml:space="preserve">
+    <value>Surface</value>
+  </data>
+  <data name="SurfaceForegroundBox.Header" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="OpacitySlider.Header" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="SurfaceBlurSlider.Header" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="FontBox.Header" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="RadiusSlider.Header" xml:space="preserve">
+    <value>Corner radius</value>
+  </data>
+  <data name="ControlStateBox.Header" xml:space="preserve">
+    <value>Control state</value>
+  </data>
+  <data name="StateDefault.Content" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="StateHover.Content" xml:space="preserve">
+    <value>Hover</value>
+  </data>
+  <data name="StatePressed.Content" xml:space="preserve">
+    <value>Pressed</value>
+  </data>
+  <data name="StateDisabled.Content" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="PreviewTitle.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="PreviewSubtitle.Text" xml:space="preserve">
+    <value>Simulated view · not the live ChatGPT app</value>
+  </data>
+  <data name="ThemeNameLabel.Text" xml:space="preserve">
+    <value>Theme name</value>
+  </data>
+  <data name="FitCover.Content" xml:space="preserve">
+    <value>Cover</value>
+  </data>
+  <data name="FitContain.Content" xml:space="preserve">
+    <value>Contain</value>
+  </data>
+  <data name="FitFill.Content" xml:space="preserve">
+    <value>Fill</value>
+  </data>
+  <data name="DimLabel.Text" xml:space="preserve">
+    <value>Dark overlay</value>
+  </data>
+  <data name="BackgroundBlurLabel.Text" xml:space="preserve">
+    <value>Background blur</value>
+  </data>
+  <data name="OpacityLabel.Text" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="SurfaceBlurLabel.Text" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="RadiusLabel.Text" xml:space="preserve">
+    <value>Corner radius</value>
+  </data>
+  <data name="NewThemeButton.Content" xml:space="preserve"><value>New theme</value></data>
+  <data name="LocalThemesBox.Header" xml:space="preserve"><value>Local themes</value></data>
+  <data name="ProbeAdapterButton.Content" xml:space="preserve"><value>Check local connection</value></data>
+  <data name="SafeLaunchButton.Content" xml:space="preserve"><value>Safe launch</value></data>
+  <data name="AdapterStatus.Text" xml:space="preserve"><value>Not verified</value></data>
+  <data name="PrivacyStatement.Text" xml:space="preserve"><value>No conversation data is read or uploaded.</value></data>
+  <data name="ThemeNameBox.PlaceholderText" xml:space="preserve"><value>My theme</value></data>
+  <data name="SaveThemeButton.Content" xml:space="preserve"><value>Save local theme</value></data>
+  <data name="RestoreDefaultButton.Content" xml:space="preserve"><value>Restore default</value></data>
+  <data name="PreviewWarning.Text" xml:space="preserve"><value>Preview only</value></data>
+  <data name="StatusText.Text" xml:space="preserve"><value>Local theme changes are saved on this device.</value></data>
+  <data name="FooterNote.Text" xml:space="preserve"><value>Independent project. Live application stays disabled until version-specific validation passes.</value></data>
+</root>

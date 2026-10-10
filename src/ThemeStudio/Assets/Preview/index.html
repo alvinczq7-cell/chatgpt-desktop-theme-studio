@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https://themes.local data:; media-src https://themes.local; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; color: #f3f5fa; font: 14px "Segoe UI Variable Text", "Segoe UI", sans-serif; background: #151923; }
+    body { position: relative; }
+    #background, #shade { position: absolute; inset: 0; pointer-events: none; }
+    #background { z-index: 0; background-position: center; background-size: cover; filter: blur(0); transform: scale(1.02); }
+    #background video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    #shade { z-index: 1; background: rgba(0,0,0,.2); }
+    #app { position: relative; z-index: 2; display: grid; grid-template-columns: 190px 1fr; gap: 12px; height: 100%; padding: 12px; }
+    .panel { background: color-mix(in srgb, var(--panel) calc(var(--opacity) * 1%), transparent); backdrop-filter: blur(var(--blur)); border-radius: var(--radius); border: 1px solid rgba(255,255,255,.08); }
+    aside { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+    main { display: flex; flex-direction: column; min-width: 0; }
+    header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .content { flex: 1; margin-bottom: 12px; padding: 22px; overflow: hidden; }
+    .composer { padding: 12px 16px; display:flex; gap: 10px; align-items:center; }
+    .pill { border: 1px solid rgba(255,255,255,.12); border-radius: 999px; padding: 7px 10px; color: #d8ddeb; }
+    .muted { opacity: .7; }
+    .bubble { max-width: 74%; margin: 16px 0; padding: 14px; border-radius: var(--radius); background: color-mix(in srgb, var(--panel) 78%, transparent); }
+    .bubble.user { margin-left: auto; background: color-mix(in srgb, var(--accent) 75%, transparent); }
+    .fake-input { flex: 1; padding: 12px; border-radius: 12px; background: rgba(0,0,0,.18); }
+    .sample-card, .sample-menu, .sample-control { border: 1px solid rgba(255,255,255,.1); padding: 8px 10px; margin: 8px 6px 0 0; display: inline-block; }
+    .sample-control { cursor: default; }
+    [data-state="hover"] { outline: 2px solid var(--accent); }
+    [data-state="pressed"] { transform: scale(.98); }
+    [data-state="disabled"] { opacity: .45 !important; }
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+  <div id="background"></div><div id="shade"></div>
+  <div id="app">
+    <aside class="panel" id="sidebar"><strong>ChatGPT</strong><span class="pill">＋ New chat</span><span>⌕ Search</span><span>▤ Library</span><span>Projects</span><span class="muted">Pinned project</span><span class="muted">Recent chat</span><span style="margin-top:auto">Profile</span></aside>
+    <main>
+      <header class="panel" id="titlebar"><strong id="viewTitle">Chat</strong><span class="pill">Share　···</span></header>
+      <section class="panel content" id="content"><div class="muted">A representative preview. It does not show the live ChatGPT client.</div><div class="bubble">Hi! This is a sample conversation used to preview your theme.</div><div class="bubble user">How does the theme look with a longer message?</div><div class="bubble">Colors and surface transparency can be tuned in the editor. Theme controls here only affect the preview.</div><div class="sample-card panel" id="cards">Suggested prompt card</div><div class="sample-menu panel" id="menu">Menu item　⋯</div><div class="sample-control panel" id="controls">Primary button</div></section>
+      <div class="panel composer" id="composer"><span class="pill">＋</span><span class="fake-input">Message ChatGPT</span><span class="pill">↑</span></div>
+    </main>
+  </div>
+  <script>
+    const regions = { sidebar: 'sidebar', titlebar: 'titlebar', content: 'content', composer: 'composer', menu: 'menu', cards: 'cards', controls: 'controls' };
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let lastTheme = null;
+    function postMediaError() { window.chrome?.webview?.postMessage('media-error'); }
+    function reportMediaSize(media) {
+      const width = media.videoWidth || media.naturalWidth || 0;
+      const height = media.videoHeight || media.naturalHeight || 0;
+      if (width >= 3840 || height >= 2160) window.chrome?.webview?.postMessage(`large-media:${width}x${height}`);
+    }
+    function useFallback(layer, bg) {
+      layer.replaceChildren();
+      layer.style.backgroundImage = bg.kind === 'gradient' ? `linear-gradient(135deg, ${bg.color}, ${bg.gradientEndColor})` : 'none';
+      layer.style.backgroundColor = bg.color || '#151923';
+      postMediaError();
+    }
+    function applyBackground(value, bg, layer) {
+      const animated = ['gif', 'mp4', 'webm'].includes(bg.kind);
+      const paused = Boolean(bg.paused || value.autoPaused || document.hidden || reducedMotion.matches);
+      layer.style.backgroundImage = 'none';
+      layer.style.backgroundColor = bg.color || '#151923';
+      layer.style.filter = `blur(${Number(bg.blur || 0)}px)`;
+      layer.style.backgroundSize = bg.fit === 'contain' ? 'contain' : bg.fit === 'fill' ? '100% 100%' : 'cover';
+      layer.style.backgroundPosition = `${Number(bg.positionX ?? 50)}% ${Number(bg.positionY ?? 50)}%`;
+      if (bg.kind === 'gradient') layer.style.backgroundImage = `linear-gradient(135deg, ${bg.color}, ${bg.gradientEndColor})`;
+      if (!bg.assetUrl || !['image', 'gif', 'mp4', 'webm'].includes(bg.kind)) { layer.replaceChildren(); return; }
+
+      let media = layer.firstElementChild;
+      const tag = bg.kind === 'mp4' || bg.kind === 'webm' ? 'VIDEO' : 'IMG';
+      if (!media || media.tagName !== tag || media.dataset.assetUrl !== bg.assetUrl || media.dataset.kind !== bg.kind) {
+        layer.replaceChildren();
+        media = document.createElement(tag.toLowerCase());
+        media.dataset.assetUrl = bg.assetUrl; media.dataset.kind = bg.kind;
+        media.src = bg.assetUrl;
+        media.onerror = () => useFallback(layer, bg);
+        if (tag === 'VIDEO') { media.loop = true; media.muted = true; media.playsInline = true; media.controls = false; media.onloadedmetadata = () => reportMediaSize(media); }
+        else { media.alt = ''; media.onload = () => reportMediaSize(media); }
+        layer.append(media);
+      }
+      media.style.width = '100%'; media.style.height = '100%';
+      media.style.objectFit = bg.fit === 'contain' ? 'contain' : bg.fit === 'fill' ? 'fill' : 'cover';
+      media.style.objectPosition = `${Number(bg.positionX ?? 50)}% ${Number(bg.positionY ?? 50)}%`;
+      if (bg.kind === 'gif') {
+        if (paused && media.dataset.frozen !== 'true' && media.complete && media.naturalWidth) {
+          const canvas = document.createElement('canvas'); canvas.width = media.naturalWidth; canvas.height = media.naturalHeight;
+          canvas.getContext('2d')?.drawImage(media, 0, 0);
+          try { media.dataset.snapshot = canvas.toDataURL('image/png'); media.dataset.frozen = 'true'; media.src = media.dataset.snapshot; }
+          catch { /* A static first frame is preferable to failing the preview. */ }
+        } else if (!paused && media.dataset.frozen === 'true') {
+          media.dataset.frozen = 'false'; media.src = media.dataset.assetUrl;
+        }
+      } else if (tag === 'VIDEO') {
+        if (paused) media.pause();
+        else media.play().catch(() => {});
+      }
+    }
+    function applyTheme(value) {
+      lastTheme = value;
+      const root = document.documentElement;
+      const bg = value.background || {};
+      const layer = document.getElementById('background');
+      const shade = document.getElementById('shade');
+      const view = value.view || 'chat';
+      document.getElementById('viewTitle').textContent = view.toUpperCase();
+      applyBackground(value, bg, layer);
+      shade.style.background = `rgba(0,0,0,${Math.max(0,Math.min(100,Number(bg.dimPercent ?? 20)))/100})`;
+      const surfaces = value.surfaces || {};
+      const base = surfaces.content || {};
+      root.style.setProperty('--accent', value.accent || '#4f8ef7');
+      root.style.setProperty('--panel', base.backgroundColor || '#202532');
+      root.style.setProperty('--opacity', Number(base.opacity ?? 92));
+      root.style.setProperty('--blur', `${Number(base.blur || 0)}px`);
+      root.style.setProperty('--radius', `${Number(base.cornerRadius ?? 12)}px`);
+      root.style.fontFamily = base.fontFamily || 'Segoe UI Variable Text';
+      for (const [key, id] of Object.entries(regions)) {
+        const style = surfaces[key]; if (!style) continue;
+        const el = document.getElementById(id);
+        el.style.setProperty('--panel', style.backgroundColor || '#202532');
+        el.style.setProperty('--opacity', Number(style.opacity ?? 92));
+        el.style.setProperty('--blur', `${Number(style.blur || 0)}px`);
+        el.style.setProperty('--radius', `${Number(style.cornerRadius ?? 12)}px`);
+        el.style.color = style.foregroundColor || '#f3f5fa';
+        el.style.fontFamily = style.fontFamily || 'Segoe UI Variable Text';
+        el.dataset.state = style.controlState || 'default';
+      }
+    }
+    window.applyTheme = applyTheme;
+    document.addEventListener('visibilitychange', () => { if (lastTheme) applyTheme(lastTheme); });
+    reducedMotion.addEventListener('change', () => { if (lastTheme) applyTheme(lastTheme); });
+  </script>
+</body>
+</html>

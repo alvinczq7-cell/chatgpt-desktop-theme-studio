@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="BrandTitle.Text" xml:space="preserve">
+    <value>主题工坊</value>
+  </data>
+  <data name="BrandSubtitle.Text" xml:space="preserve">
+    <value>CHATGPT 桌面版</value>
+  </data>
+  <data name="WorkspaceLabel.Text" xml:space="preserve">
+    <value>工作区</value>
+  </data>
+  <data name="ChatView.Content" xml:space="preserve">
+    <value>聊天</value>
+  </data>
+  <data name="WorkView.Content" xml:space="preserve">
+    <value>工作</value>
+  </data>
+  <data name="CodexView.Content" xml:space="preserve">
+    <value>Codex</value>
+  </data>
+  <data name="SyncViewsButton.Content" xml:space="preserve">
+    <value>同步三个视图的主题</value>
+  </data>
+  <data name="LiveAdapterTitle.Text" xml:space="preserve">
+    <value>实时适配器</value>
+  </data>
+  <data name="ImportThemeButton.Content" xml:space="preserve">
+    <value>导入主题</value>
+  </data>
+  <data name="ExportThemeButton.Content" xml:space="preserve">
+    <value>导出主题</value>
+  </data>
+  <data name="EditorTitle.Text" xml:space="preserve">
+    <value>主题编辑器</value>
+  </data>
+  <data name="EditorSubtitle.Text" xml:space="preserve">
+    <value>为当前工作区视图定制外观。</value>
+  </data>
+  <data name="ThemeSection.Text" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="ThemeNameBox.Header" xml:space="preserve">
+    <value>主题名称</value>
+  </data>
+  <data name="BackgroundSection.Text" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="BackgroundKindBox.Header" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="SolidBackground.Content" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="GradientBackground.Content" xml:space="preserve">
+    <value>渐变</value>
+  </data>
+  <data name="ImageBackground.Content" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="VideoBackground.Content" xml:space="preserve">
+    <value>视频 (MP4 / WebM)</value>
+  </data>
+  <data name="BackgroundColorBox.Header" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="GradientEndBox.Header" xml:space="preserve">
+    <value>渐变终点</value>
+  </data>
+  <data name="BackgroundFileBox.Header" xml:space="preserve">
+    <value>本地媒体</value>
+  </data>
+  <data name="BackgroundFileBox.PlaceholderText" xml:space="preserve">
+    <value>未选择媒体</value>
+  </data>
+  <data name="ChooseFileButton.Content" xml:space="preserve">
+    <value>选择文件</value>
+  </data>
+  <data name="PausePreviewButton.Content" xml:space="preserve">
+    <value>暂停预览</value>
+  </data>
+  <data name="FitBox.Header" xml:space="preserve">
+    <value>适配方式</value>
+  </data>
+  <data name="SelectedSurfaceTitle.Text" xml:space="preserve">
+    <value>界面区域</value>
+  </data>
+  <data name="SurfaceBox.Header" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="SidebarRegion.Content" xml:space="preserve">
+    <value>侧边栏</value>
+  </data>
+  <data name="TitlebarRegion.Content" xml:space="preserve">
+    <value>标题栏</value>
+  </data>
+  <data name="ContentRegion.Content" xml:space="preserve">
+    <value>内容 / 对话区</value>
+  </data>
+  <data name="ComposerRegion.Content" xml:space="preserve">
+    <value>输入区</value>
+  </data>
+  <data name="MenusRegion.Content" xml:space="preserve">
+    <value>菜单</value>
+  </data>
+  <data name="CardsRegion.Content" xml:space="preserve">
+    <value>卡片</value>
+  </data>
+  <data name="ControlsRegion.Content" xml:space="preserve">
+    <value>按钮和控件</value>
+  </data>
+  <data name="SurfaceBackgroundBox.Header" xml:space="preserve">
+    <value>表面颜色</value>
+  </data>
+  <data name="SurfaceForegroundBox.Header" xml:space="preserve">
+    <value>文字颜色</value>
+  </data>
+  <data name="OpacitySlider.Header" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="SurfaceBlurSlider.Header" xml:space="preserve">
+    <value>模糊</value>
+  </data>
+  <data name="FontBox.Header" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="RadiusSlider.Header" xml:space="preserve">
+    <value>圆角</value>
+  </data>
+  <data name="ControlStateBox.Header" xml:space="preserve">
+    <value>控件状态</value>
+  </data>
+  <data name="StateDefault.Content" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="StateHover.Content" xml:space="preserve">
+    <value>悬停</value>
+  </data>
+  <data name="StatePressed.Content" xml:space="preserve">
+    <value>按下</value>
+  </data>
+  <data name="StateDisabled.Content" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="PreviewTitle.Text" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="PreviewSubtitle.Text" xml:space="preserve">
+    <value>仿真界面 · 并非实时 ChatGPT</value>
+  </data>
+  <data name="ThemeNameLabel.Text" xml:space="preserve">
+    <value>主题名称</value>
+  </data>
+  <data name="FitCover.Content" xml:space="preserve">
+    <value>填充</value>
+  </data>
+  <data name="FitContain.Content" xml:space="preserve">
+    <value>完整显示</value>
+  </data>
+  <data name="FitFill.Content" xml:space="preserve">
+    <value>拉伸</value>
+  </data>
+  <data name="DimLabel.Text" xml:space="preserve">
+    <value>暗化遮罩</value>
+  </data>
+  <data name="BackgroundBlurLabel.Text" xml:space="preserve">
+    <value>背景模糊</value>
+  </data>
+  <data name="OpacityLabel.Text" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="SurfaceBlurLabel.Text" xml:space="preserve">
+    <value>模糊</value>
+  </data>
+  <data name="RadiusLabel.Text" xml:space="preserve">
+    <value>圆角</value>
+  </data>
+  <data name="NewThemeButton.Content" xml:space="preserve"><value>新建主题</value></data>
+  <data name="LocalThemesBox.Header" xml:space="preserve"><value>本地主题</value></data>
+  <data name="ProbeAdapterButton.Content" xml:space="preserve"><value>检查本机连接</value></data>
+  <data name="SafeLaunchButton.Content" xml:space="preserve"><value>安全启动</value></data>
+  <data name="AdapterStatus.Text" xml:space="preserve"><value>未验证</value></data>
+  <data name="PrivacyStatement.Text" xml:space="preserve"><value>不会读取或上传对话内容。</value></data>
+  <data name="ThemeNameBox.PlaceholderText" xml:space="preserve"><value>我的主题</value></data>
+  <data name="SaveThemeButton.Content" xml:space="preserve"><value>保存本地主题</value></data>
+  <data name="RestoreDefaultButton.Content" xml:space="preserve"><value>恢复默认</value></data>
+  <data name="PreviewWarning.Text" xml:space="preserve"><value>仅供预览</value></data>
+  <data name="StatusText.Text" xml:space="preserve"><value>主题只保存在本机。</value></data>
+  <data name="FooterNote.Text" xml:space="preserve"><value>独立项目。完成具体客户端版本验证前不会启用实时应用。</value></data>
+</root>
