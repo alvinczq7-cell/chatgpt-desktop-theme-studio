@@ -40,7 +40,7 @@ jobs:
             $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $_.FullName).Hash.ToLowerInvariant()
             "$hash  $($_.Name)" | Add-Content -LiteralPath artifacts/SHA256SUMS.txt
           }
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           name: ChatGPT Desktop Theme Studio ${{ github.ref_name }}
           body: |

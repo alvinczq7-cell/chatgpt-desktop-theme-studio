@@ -15,7 +15,8 @@
 - Self-contained `win-x64` executable launched and remained active for 10 seconds.
 - Inno Setup 6.7.3 generated an installer; the per-user install, Start Menu shortcut, and installed executable launch were verified.
 - Portable ZIP, installer, sample packages, and SHA-256 checksums exist locally under ignored `artifacts/`.
-- GitHub Actions Windows CI and the `v0.1.0` Windows Release workflow passed. The release page contains the setup, portable ZIP, three sample themes, and checksums.
+- GitHub Actions Windows CI passed with Node 24 compatible checkout and .NET setup actions. The `v0.1.1` Windows Release workflow passed and published the setup, portable ZIP, four sample themes (including an animated GIF theme), and checksums.
+- GitHub Release page: [`v0.1.1`](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases/tag/v0.1.1). Release assets show GitHub SHA-256 digests.
 - The registered ChatGPT package activation API launched an isolated instance with a temporary profile and returned loopback CDP metadata. `/json/list` returned zero page targets; no DOM or CSS compatibility was verified.
 
 ## Not verified or enabled
