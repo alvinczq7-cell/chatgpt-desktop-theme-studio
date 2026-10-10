@@ -14,6 +14,8 @@
 
 想体验动态背景？下载 [Aurora Motion 主题包](samples/packages/aurora-motion-1.0.0.tstheme)，再在 Theme Studio 中导入。
 
+![Theme Studio 编辑器与仿真的 Chat 预览。当前未启用对官方客户端的实时样式应用。](docs/theme-studio-editor-preview.svg)
+
 ## 当前状态
 
 **主题管理器已通过本机 Release 构建、13 项自动化测试、样例主题生成、安装器构建与安装，并从便携目录和安装目录分别启动检查 10 秒。ChatGPT 实际客户端适配仍未验证并保持禁用。** 管理器支持本地主题库、主题包导入/导出、仿真预览和动态背景，但目前不会声称能把主题实时应用到 ChatGPT。

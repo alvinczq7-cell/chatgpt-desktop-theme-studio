@@ -14,6 +14,8 @@ A Windows companion app for designing and organizing local themes for the new Ch
 
 Want to try the moving background? Download [Aurora Motion](samples/packages/aurora-motion-1.0.0.tstheme) and import it in Theme Studio.
 
+![Theme Studio editor with a simulated Chat preview. Live client styling is disabled.](docs/theme-studio-editor-preview.svg)
+
 ## Current status
 
 **The theme manager has passed a local Release build, 13 automated tests, package generation, installer build/install, and a 10-second launch check from both the portable and installed folders. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
