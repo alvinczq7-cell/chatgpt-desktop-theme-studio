@@ -1,19 +1,24 @@
 # Implementation status
 
-## Present in the repository
+## Implemented
 
-- WinUI 3 editor shell with Chat, Work, and Codex profiles.
-- Local theme library, theme package v1 model, import/export, and input validation.
-- Image/GIF/MP4/WebM media copy and simulated preview.
-- Preview pause behavior for user pause, hidden window, reduced motion, battery power, and a fullscreen foreground app.
-- Fail-closed host adapter interface and a loopback-only CDP metadata probe.
-- English and Simplified Chinese UI resources, three media-free sample packages, and Windows CI/release workflows.
+- WinUI 3 theme editor for Chat, Work, and Codex profiles, with sync, local theme library, package v1 import/export, and sample packages.
+- Image/GIF/MP4/WebM background media, simulated preview, and playback pause policies.
+- Fail-closed host adapter interface and loopback-only CDP metadata probe.
+- English and Simplified Chinese UI, docs, GitHub Actions CI/release workflows, and an Inno Setup installer definition.
+- Self-contained publishing with the WinUI control resource dictionary included; WebView2 profile data is stored in LocalAppData.
 
-## Not verified / not enabled
+## Verified on the development machine
 
-- The current machine has ChatGPT desktop 26.1002.7124.0 running, but no local CDP listener was observed. The active client was not restarted.
-- The development machine has no .NET SDK, so the WinUI app and C# test suite could not be built or executed here.
-- No host view selectors or compatibility map have been validated. The Safe launch button is disabled, and no UI style is injected into ChatGPT.
-- Installer workflow, WebView2 runtime behavior, GIF/video decode behavior, and battery/fullscreen pause policy still require Windows runtime validation.
+- Windows 11 x64, .NET SDK 10.0.401, and Windows App SDK 1.8.
+- Release build completed with zero warnings/errors; 6 automated tests and static verification passed.
+- Self-contained `win-x64` executable launched and remained active for 10 seconds.
+- Inno Setup 6.7.3 generated an installer; the per-user install, Start Menu shortcut, and installed executable launch were verified.
+- Portable ZIP, installer, sample packages, and SHA-256 checksums exist locally under ignored `artifacts/`.
 
-The first release must not claim live ChatGPT theming until the adapter gate is passed and a specific client build is documented in `compatibility.md`.
+## Not verified or enabled
+
+- No ChatGPT desktop client build has passed end-to-end connection, render, use, and recovery checks. The adapter stays disabled; Safe launch is unavailable, and no styles are injected.
+- Dynamic backgrounds and pause policies have not had full runtime QA across battery, fullscreen, and reduced-motion scenarios.
+- The packages have not been tested on a clean Windows machine. The installer is unsigned.
+- GitHub Actions for the latest local changes and a tagged GitHub Release still need to complete.

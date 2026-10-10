@@ -75,7 +75,12 @@ public sealed partial class MainWindow : Window
 
     private async Task InitializePreviewAsync()
     {
-        await PreviewWebView.EnsureCoreWebView2Async();
+        var webViewData = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "ThemeStudio", "WebView2");
+        var webViewEnvironment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateWithOptionsAsync(
+            null, webViewData, new Microsoft.Web.WebView2.Core.CoreWebView2EnvironmentOptions());
+        await PreviewWebView.EnsureCoreWebView2Async(webViewEnvironment);
         var assets = Path.Combine(AppContext.BaseDirectory, "Assets");
         PreviewWebView.CoreWebView2.SetVirtualHostNameToFolderMapping(
             "appassets.local", assets, Microsoft.Web.WebView2.Core.CoreWebView2HostResourceAccessKind.Allow);

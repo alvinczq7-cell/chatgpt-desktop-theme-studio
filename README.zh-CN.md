@@ -8,9 +8,9 @@
 
 ## 当前状态
 
-**MVP 管理器已实现并通过本机 Release 构建、6 项自动化测试及短时启动检查。ChatGPT 实际客户端适配仍未验证并保持禁用。** 主题管理器支持本地主题库、主题包导入/导出、仿真预览和动态背景，但目前不会声称能把主题实时应用到 ChatGPT。
+**主题管理器已通过本机 Release 构建、6 项自动化测试、样例主题生成、安装器构建与安装，并从便携目录和安装目录分别启动检查 10 秒。ChatGPT 实际客户端适配仍未验证并保持禁用。** 管理器支持本地主题库、主题包导入/导出、仿真预览和动态背景，但目前不会声称能把主题实时应用到 ChatGPT。
 
-运行目标为 Windows 11 x64、.NET 10 和 Windows App SDK。仓库包含 Windows CI、便携版与安装包的 Release 工作流；便携包和安装器尚未在本地打包验收。完整进度见 [进度检查点](docs/progress-2026-10-10.md)。
+运行目标为 Windows 11 x64、.NET 10 和 Windows App SDK。首批本地发行文件会在 Release 工作流完成后出现在 [GitHub Releases](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases)。完整进度见 [进度检查点](docs/progress-2026-10-10.md)。
 
 ## MVP 功能
 
@@ -33,7 +33,7 @@ dotnet build ThemeStudio.sln -c Release -p:Platform=x64
 dotnet test tests/ThemeStudio.Tests/ThemeStudio.Tests.csproj -c Release -p:Platform=x64
 ```
 
-安装器目前不签名；发布工作流会生成 SHA-256 校验文件。Live 主题注入和安全启动仍保持关闭，直到适配器通过版本专项验证。
+安装器目前不签名；发布工作流会生成样例主题与 SHA-256 校验文件。Live 主题注入和安全启动仍保持关闭，直到适配器通过版本专项验证。
 
 ## 主题包
 

@@ -42,6 +42,13 @@ jobs:
           }
       - uses: softprops/action-gh-release@v2
         with:
+          name: ChatGPT Desktop Theme Studio ${{ github.ref_name }}
+          body: |
+            Windows 11 x64 preview release of the local theme manager.
+
+            **The live ChatGPT client adapter is unverified and remains disabled.** This build edits and previews local theme packs; it does not apply themes to the official ChatGPT app yet.
+
+            The installer is unsigned. The packages were smoke-tested on the development machine and have not been tested on a clean Windows installation. Verify downloads against `SHA256SUMS.txt`.
           files: |
             artifacts/ThemeStudio-Setup.exe
             artifacts/ThemeStudio-portable-win-x64.zip

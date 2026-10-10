@@ -8,9 +8,9 @@ A Windows companion app for designing and organizing local themes for the new Ch
 
 ## Current status
 
-**The MVP manager is implemented and has passed a local Release build, six automated tests, and a short launch smoke check. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
+**The theme manager has passed a local Release build, six automated tests, package generation, installer build/install, and a 10-second launch check from both the portable and installed folders. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
 
-The target is Windows 11 x64 with .NET 10 and Windows App SDK. The repository includes Windows CI and release workflows for a portable ZIP and installer; those packages have not yet been built and verified locally. See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
+The target is Windows 11 x64 with .NET 10 and Windows App SDK. The first local package outputs are available under [GitHub Releases](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases) after the release workflow completes. See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
 
 ## MVP features
 
@@ -33,7 +33,7 @@ dotnet build ThemeStudio.sln -c Release -p:Platform=x64
 dotnet test tests/ThemeStudio.Tests/ThemeStudio.Tests.csproj -c Release -p:Platform=x64
 ```
 
-The release workflow creates a portable folder ZIP, an Inno Setup installer, and SHA-256 checksums. The installer is currently unsigned. Live theme injection and safe launch remain disabled until the adapter passes version-specific validation.
+The release workflow creates a portable folder ZIP, an Inno Setup installer, sample themes, and SHA-256 checksums. The installer is currently unsigned. Live theme injection and safe launch remain disabled until the adapter passes version-specific validation.
 
 ## Theme package
 
