@@ -2,7 +2,9 @@
 
 > An independent community project. Not affiliated with or endorsed by OpenAI.
 
-A Windows companion app for creating and organizing local themes for the new ChatGPT desktop app. The planned target views are Chat, Work, and Codex.
+A Windows companion app for designing and organizing local themes for the new ChatGPT desktop app. Theme editing covers the Chat, Work, and Codex views; live application to the official client is still under compatibility validation.
+
+[English](README.md) · [简体中文](README.zh-CN.md)
 
 ## Current status
 
@@ -10,14 +12,17 @@ A Windows companion app for creating and organizing local themes for the new Cha
 
 The target is Windows 11 x64 with .NET 10 and Windows App SDK. The repository includes Windows CI and release workflows for a portable ZIP and installer; those packages have not yet been built and verified locally. See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
 
-## Planned features
+## MVP features
 
 - Separate appearance profiles for Chat, Work, and Codex.
 - Local image, GIF, MP4, and WebM backgrounds.
 - Per-surface color, opacity, blur, font, radius, and control-state settings.
 - Silent looping with manual pause and power/accessibility pause rules.
 - Local theme packages with media included; no scripts or arbitrary CSS.
-- Safe launch, adapter status, disable, and restore controls.
+- Simulated previews for comparing theme settings before export.
+- A fail-closed client adapter: it stays disabled until a ChatGPT build is verified.
+
+If this project is useful to you, a GitHub star helps other ChatGPT Desktop users find it. Bug reports and reproducible compatibility notes are welcome.
 
 ## Build
 
