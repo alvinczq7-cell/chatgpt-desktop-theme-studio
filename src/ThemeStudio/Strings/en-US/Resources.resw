@@ -165,6 +165,12 @@
   <data name="BackgroundBlurLabel.Text" xml:space="preserve">
     <value>Background blur</value>
   </data>
+  <data name="BackgroundPositionXLabel.Text" xml:space="preserve">
+    <value>Horizontal position</value>
+  </data>
+  <data name="BackgroundPositionYLabel.Text" xml:space="preserve">
+    <value>Vertical position</value>
+  </data>
   <data name="OpacityLabel.Text" xml:space="preserve">
     <value>Opacity</value>
   </data>

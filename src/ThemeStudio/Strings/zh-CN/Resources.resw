@@ -165,6 +165,12 @@
   <data name="BackgroundBlurLabel.Text" xml:space="preserve">
     <value>背景模糊</value>
   </data>
+  <data name="BackgroundPositionXLabel.Text" xml:space="preserve">
+    <value>水平位置</value>
+  </data>
+  <data name="BackgroundPositionYLabel.Text" xml:space="preserve">
+    <value>垂直位置</value>
+  </data>
   <data name="OpacityLabel.Text" xml:space="preserve">
     <value>透明度</value>
   </data>

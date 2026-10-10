@@ -25,7 +25,7 @@ The target is Windows 11 x64 with .NET 10 and Windows App SDK. Download the [lat
 ## MVP features
 
 - Separate appearance profiles for Chat, Work, and Codex.
-- Local image, GIF, MP4, and WebM backgrounds.
+- Background fit and position controls with local image, GIF, MP4, and WebM media.
 - Per-surface color, opacity, blur, font, radius, and control-state settings.
 - Silent looping with manual pause and power/accessibility pause rules.
 - Local theme packages with media included; no scripts or arbitrary CSS.

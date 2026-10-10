@@ -136,6 +136,8 @@ public sealed partial class MainWindow : Window
             ThemeNameBox.Text = _theme.Name;
             BackgroundColorBox.Text = view.Background.Color;
             GradientEndBox.Text = view.Background.GradientEndColor;
+            BackgroundPositionXSlider.Value = view.Background.PositionX;
+            BackgroundPositionYSlider.Value = view.Background.PositionY;
             DimSlider.Value = view.Background.DimPercent;
             BackgroundBlurSlider.Value = view.Background.Blur;
             FitBox.SelectedIndex = view.Background.Fit switch { BackgroundFit.Contain => 1, BackgroundFit.Fill => 2, _ => 0 };
@@ -326,6 +328,8 @@ public sealed partial class MainWindow : Window
     {
         if (_loading || !_initialized) return;
         var background = _theme.Views[_viewKey].Background;
+        background.PositionX = (int)BackgroundPositionXSlider.Value;
+        background.PositionY = (int)BackgroundPositionYSlider.Value;
         background.DimPercent = (int)DimSlider.Value;
         background.Blur = (int)BackgroundBlurSlider.Value;
         _ = ApplyPreviewAsync();
