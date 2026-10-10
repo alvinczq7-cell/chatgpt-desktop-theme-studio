@@ -405,40 +405,60 @@ public sealed partial class MainWindow : Window
 
     private async void OnChooseMedia(object sender, RoutedEventArgs e)
     {
-        try { await SaveCurrentAsync(); }
-        catch (Exception ex) { StatusText.Text = $"Save the current theme before adding media: {ex.Message}"; return; }
-        var picker = new FileOpenPicker();
-        foreach (var extension in new[] { ".png", ".jpg", ".jpeg", ".webp", ".gif", ".mp4", ".webm" }) picker.FileTypeFilter.Add(extension);
-        InitializeWithWindow.Initialize(picker, WindowNative.GetWindowHandle(this));
-        var file = await picker.PickSingleFileAsync();
-        if (file is null) return;
-
-        var properties = await file.GetBasicPropertiesAsync();
-
-        var extensionChosen = Path.GetExtension(file.Name).ToLowerInvariant();
-        var kind = extensionChosen switch
+        try
         {
-            ".gif" => BackgroundKind.Gif, ".mp4" => BackgroundKind.Mp4, ".webm" => BackgroundKind.Webm,
-            ".png" or ".jpg" or ".jpeg" or ".webp" => BackgroundKind.Image,
-            _ => throw new InvalidDataException("Unsupported background format.")
-        };
-        var assetName = $"{Guid.NewGuid():N}{extensionChosen}";
-        var mediaRoot = _library.MediaRootFor(_theme.Id);
-        using (var source = await file.OpenStreamForReadAsync())
-        await using (var target = new FileStream(Path.Combine(mediaRoot, assetName), FileMode.CreateNew, FileAccess.Write, FileShare.None))
-            await source.CopyToAsync(target);
+            StatusText.Text = LocalText("Opening the file picker…", "正在打开文件选择器…");
+            var picker = new FileOpenPicker();
+            foreach (var extension in new[] { ".png", ".jpg", ".jpeg", ".webp", ".gif", ".mp4", ".webm" })
+                picker.FileTypeFilter.Add(extension);
+            InitializeWithWindow.Initialize(picker, WindowNative.GetWindowHandle(this));
+            var file = await picker.PickSingleFileAsync();
+            if (file is null)
+            {
+                StatusText.Text = LocalText("No file was selected.", "未选择文件。");
+                return;
+            }
 
-        var background = _theme.Views[_viewKey].Background;
-        background.Kind = kind;
-        background.AssetPath = $"assets/{assetName}";
-        _loading = true;
-        BackgroundFileBox.Text = file.Name;
-        BackgroundKindBox.SelectedIndex = kind switch { BackgroundKind.Image => 2, BackgroundKind.Gif => 3, _ => 4 };
-        _loading = false;
-        await SaveCurrentAsync();
-        if (properties.Size > 100UL * 1024 * 1024)
-            StatusText.Text = LocalText($"Large media ({properties.Size / (1024 * 1024)} MiB). It was copied without conversion; playback may use more GPU and memory.",
-                $"媒体文件较大（{properties.Size / (1024 * 1024)} MiB）。文件已原样复制，播放时可能占用较多显存和内存。");
+            var properties = await file.GetBasicPropertiesAsync();
+            var extensionChosen = Path.GetExtension(file.Name).ToLowerInvariant();
+            var kind = extensionChosen switch
+            {
+                ".gif" => BackgroundKind.Gif, ".mp4" => BackgroundKind.Mp4, ".webm" => BackgroundKind.Webm,
+                ".png" or ".jpg" or ".jpeg" or ".webp" => BackgroundKind.Image,
+                _ => throw new InvalidDataException("Unsupported background format.")
+            };
+            var assetName = $"{Guid.NewGuid():N}{extensionChosen}";
+            var mediaRoot = _library.MediaRootFor(_theme.Id);
+            using (var source = await file.OpenStreamForReadAsync())
+            await using (var target = new FileStream(Path.Combine(mediaRoot, assetName), FileMode.CreateNew, FileAccess.Write, FileShare.None))
+                await source.CopyToAsync(target);
+
+            var background = _theme.Views[_viewKey].Background;
+            background.Kind = kind;
+            background.AssetPath = $"assets/{assetName}";
+            _loading = true;
+            BackgroundFileBox.Text = file.Name;
+            BackgroundKindBox.SelectedIndex = kind switch { BackgroundKind.Image => 2, BackgroundKind.Gif => 3, _ => 4 };
+            _loading = false;
+            MarkUnsaved();
+            await SaveCurrentAsync();
+            if (properties.Size > 100UL * 1024 * 1024)
+                StatusText.Text = LocalText($"Large media ({properties.Size / (1024 * 1024)} MiB). It was copied without conversion; playback may use more GPU and memory.",
+                    $"媒体文件较大（{properties.Size / (1024 * 1024)} MiB）。文件已原样复制，播放时可能占用较多显存和内存。");
+        }
+        catch (Exception ex)
+        {
+            var message = LocalText($"Could not choose or copy the background file: {ex.Message}", $"无法选择或复制背景文件：{ex.Message}");
+            StatusText.Text = message;
+            var dialog = new ContentDialog
+            {
+                Title = LocalText("File selection failed", "文件选择失败"),
+                Content = message,
+                CloseButtonText = LocalText("Close", "关闭"),
+                XamlRoot = ((FrameworkElement)Content).XamlRoot
+            };
+            await dialog.ShowAsync();
+        }
     }
 
     private async void OnTogglePreview(object sender, RoutedEventArgs e)
