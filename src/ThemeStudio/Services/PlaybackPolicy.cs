@@ -5,8 +5,17 @@ namespace ThemeStudio.Services;
 public static class PlaybackPolicy
 {
     private const uint MonitorDefaultToNearest = 2;
+    private const uint SpiGetClientAreaAnimation = 0x1042;
 
-    public static bool ShouldPause(nint studioWindowHandle) => IsOnBattery() || HasFullscreenForegroundWindow(studioWindowHandle);
+    public static bool ShouldPause(nint studioWindowHandle) =>
+        IsOnBattery() || IsReducedMotionEnabled() || HasFullscreenForegroundWindow(studioWindowHandle);
+
+    private static bool IsReducedMotionEnabled()
+    {
+        // Windows exposes the accessibility preference as whether client-area animations are enabled.
+        // If the query fails, do not force a pause based on an unknown preference.
+        return SystemParametersInfo(SpiGetClientAreaAnimation, 0, out var animationsEnabled, 0) && !animationsEnabled;
+    }
 
     private static bool IsOnBattery()
     {
@@ -30,6 +39,14 @@ public static class PlaybackPolicy
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern bool GetSystemPowerStatus(out SystemPowerStatus status);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SystemParametersInfo(
+        uint uiAction,
+        uint uiParam,
+        [MarshalAs(UnmanagedType.Bool)] out bool pvParam,
+        uint fWinIni);
 
     [DllImport("user32.dll")]
     private static extern nint GetForegroundWindow();

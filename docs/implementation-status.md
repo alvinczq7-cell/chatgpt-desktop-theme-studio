@@ -3,7 +3,7 @@
 ## Implemented
 
 - WinUI 3 theme editor for Chat, Work, and Codex profiles, with sync, local theme library, package v1 import/export, and sample packages.
-- Image/GIF/MP4/WebM background media, simulated preview, and playback pause policies.
+- Image/GIF/MP4/WebM background media, simulated preview, and playback pause policies for battery, fullscreen, and Windows client-area animation preferences.
 - Fail-closed host adapter interface and loopback-only CDP metadata probe.
 - Loopback probe reports renderer page-target counts while discarding all target URLs and titles.
 - English and Simplified Chinese UI, docs, GitHub Actions CI/release workflows, and an Inno Setup installer definition.
