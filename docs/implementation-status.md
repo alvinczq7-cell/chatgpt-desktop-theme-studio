@@ -11,7 +11,7 @@
 ## Verified on the development machine
 
 - Windows 11 x64, .NET SDK 10.0.401, and Windows App SDK 1.8.
-- Release build completed with zero warnings/errors; 11 automated tests and static verification passed.
+- Release build completed with zero warnings/errors; 12 automated tests and static verification passed.
 - Self-contained `win-x64` executable launched and remained active for 10 seconds.
 - Inno Setup 6.7.3 generated an installer; the per-user install, Start Menu shortcut, and installed executable launch were verified.
 - Portable ZIP, installer, sample packages, and SHA-256 checksums exist locally under ignored `artifacts/`.

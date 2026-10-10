@@ -39,6 +39,37 @@ public sealed class ThemePackageServiceTests
     }
 
     [Fact]
+    public async Task ExportAndImportPreservesAnimatedGifThemeMedia()
+    {
+        var root = NewTempDirectory();
+        try
+        {
+            var themeRoot = Path.Combine(root, "aurora-motion");
+            var assetsRoot = Path.Combine(themeRoot, "assets");
+            Directory.CreateDirectory(assetsRoot);
+            var sampleGif = Path.Combine(AppContext.BaseDirectory, "Samples", "aurora-drift.gif");
+            var originalBytes = await File.ReadAllBytesAsync(sampleGif);
+            await File.WriteAllBytesAsync(Path.Combine(assetsRoot, "aurora-drift.gif"), originalBytes);
+
+            var theme = new ThemeDocument { Id = "aurora-motion", Name = "Aurora Motion" };
+            foreach (var view in theme.Views.Values)
+            {
+                view.Background.Kind = BackgroundKind.Gif;
+                view.Background.AssetPath = "assets/aurora-drift.gif";
+            }
+
+            var service = new ThemePackageService();
+            var package = Path.Combine(root, "aurora-motion.tstheme");
+            await service.ExportAsync(theme, themeRoot, package);
+            var imported = await service.ImportAsync(package, Path.Combine(root, "imports"));
+
+            Assert.All(imported.Theme.Views.Values, view => Assert.Equal(BackgroundKind.Gif, view.Background.Kind));
+            Assert.Equal(originalBytes, await File.ReadAllBytesAsync(Path.Combine(imported.ThemeRoot, "assets", "aurora-drift.gif")));
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
     public async Task ImportRejectsTraversalEntries()
     {
         var root = NewTempDirectory();

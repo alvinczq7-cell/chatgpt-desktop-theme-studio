@@ -63,8 +63,8 @@ def main() -> int:
             errors.append(f"Invalid resources {resw.relative_to(ROOT)}: {exc}")
 
     packages = sorted((ROOT / "samples/packages").glob("*.tstheme"))
-    if len(packages) != 3:
-        errors.append(f"Expected 3 sample packages, found {len(packages)}")
+    if len(packages) != 4:
+        errors.append(f"Expected 4 sample packages, found {len(packages)}")
     for package in packages:
         try:
             with ZipFile(package) as archive:
@@ -80,6 +80,13 @@ def main() -> int:
                 for asset in manifest.get("assets", {}):
                     if not asset.startswith("assets/") or ".." in Path(asset).parts or asset not in names:
                         errors.append(f"Invalid sample asset path in {package.name}: {asset}")
+                    elif not archive.read(asset):
+                        errors.append(f"Sample media is empty in {package.name}: {asset}")
+                if package.stem.startswith("aurora-motion-"):
+                    if manifest.get("assets", {}).get("assets/aurora-drift.gif") != "gif":
+                        errors.append(f"Animated sample media is not declared correctly: {package.name}")
+                    if theme["views"]["chat"]["background"].get("kind") != "Gif":
+                        errors.append(f"Animated sample does not select a GIF background: {package.name}")
         except Exception as exc:
             errors.append(f"Invalid sample package {package.name}: {exc}")
 

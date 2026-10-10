@@ -19,5 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ThemeStudio.Core\ThemeStudio.Core.csproj" />
     <Compile Include="..\..\src\ThemeStudio\Adapter\CdpProbe.cs" Link="Adapter\CdpProbe.cs" />
+    <None Include="..\..\samples\media\aurora-drift.gif" Link="Samples\aurora-drift.gif" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

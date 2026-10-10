@@ -2,13 +2,21 @@
 
 > 独立社区项目，与 OpenAI 无关联，也未获其认可。
 
+[![Windows CI](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/alvinczq7-cell/chatgpt-desktop-theme-studio)](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases)
+[![MIT License](https://img.shields.io/github/license/alvinczq7-cell/chatgpt-desktop-theme-studio)](LICENSE)
+
 一个面向新版 ChatGPT Windows 桌面应用的本地主题设计与管理器，主题编辑覆盖 Chat、Work 和 Codex 三个视图；应用到官方客户端的实时适配仍在验证中。
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
+![Aurora Motion 动态背景预览](samples/media/aurora-drift.gif)
+
+想体验动态背景？下载 [Aurora Motion 主题包](samples/packages/aurora-motion-1.0.0.tstheme)，再在 Theme Studio 中导入。
+
 ## 当前状态
 
-**主题管理器已通过本机 Release 构建、11 项自动化测试、样例主题生成、安装器构建与安装，并从便携目录和安装目录分别启动检查 10 秒。ChatGPT 实际客户端适配仍未验证并保持禁用。** 管理器支持本地主题库、主题包导入/导出、仿真预览和动态背景，但目前不会声称能把主题实时应用到 ChatGPT。
+**主题管理器已通过本机 Release 构建、12 项自动化测试、样例主题生成、安装器构建与安装，并从便携目录和安装目录分别启动检查 10 秒。ChatGPT 实际客户端适配仍未验证并保持禁用。** 管理器支持本地主题库、主题包导入/导出、仿真预览和动态背景，但目前不会声称能把主题实时应用到 ChatGPT。
 
 运行目标为 Windows 11 x64、.NET 10 和 Windows App SDK。下载 [v0.1.0 预览版](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases/tag/v0.1.0)。完整进度见 [进度检查点](docs/progress-2026-10-10.md)。
 
