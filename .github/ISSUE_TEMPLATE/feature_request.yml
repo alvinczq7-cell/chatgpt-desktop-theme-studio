@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest a user-facing Theme Studio improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please focus on what you want to accomplish. Theme Studio must not read or upload conversation content, modify official app files, or enable unverified live styling.
+  - type: textarea
+    id: need
+    attributes:
+      label: What would you like to do?
+      description: Describe the user problem or workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested solution
+      description: Explain how the feature could help.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false

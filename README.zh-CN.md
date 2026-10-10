@@ -30,7 +30,7 @@
 - 仿真预览，方便导出前比较主题设置。
 - 故障关闭的客户端适配器：通过具体 ChatGPT 版本验证前保持禁用。
 
-如果你觉得这个项目有用，欢迎点 Star，帮助更多 ChatGPT 桌面端用户发现它；也欢迎提交可复现的问题和兼容性记录。
+如果你觉得这个项目有用，欢迎点 Star，帮助更多 ChatGPT 桌面端用户发现它。你也可以[报告问题](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=bug_report.yml)、[提交兼容性结果](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=compatibility_report.yml)或[建议新功能](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=feature_request.yml)。请勿在公开反馈中贴入对话内容、账户信息、私人媒体或个人文件路径。
 
 ## 构建
 

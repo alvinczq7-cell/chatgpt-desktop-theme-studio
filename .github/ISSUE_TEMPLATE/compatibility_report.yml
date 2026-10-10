@@ -1,0 +1,59 @@
+name: Compatibility report
+description: Share a reproducible Windows or ChatGPT Desktop compatibility result.
+title: "[Compatibility]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Live theme application is currently disabled. Reports help track startup, preview, and package behavior; do not attempt to enable injection or expose a debugging port. Never attach screenshots or logs containing conversations, account data, or private information.
+  - type: input
+    id: studio-version
+    attributes:
+      label: Theme Studio version
+      placeholder: v0.1.1
+    validations:
+      required: true
+  - type: input
+    id: windows-build
+    attributes:
+      label: Windows version and build
+      placeholder: Windows 11 24H2, build 26100
+    validations:
+      required: true
+  - type: input
+    id: client-version
+    attributes:
+      label: ChatGPT Desktop version
+      description: Enter the version shown by the app, or write “not installed” if the report is only about Theme Studio.
+      placeholder: 26.x.x.x
+    validations:
+      required: true
+  - type: dropdown
+    id: scenario
+    attributes:
+      label: Scenario checked
+      options:
+        - Theme Studio startup
+        - Theme package import or export
+        - Simulated preview
+        - Local connection probe
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - Worked as expected
+        - Failed with an error
+        - Worked with a limitation
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and result
+      description: Include the exact steps and non-sensitive error text. Do not include conversation content or personal file paths.
+    validations:
+      required: true

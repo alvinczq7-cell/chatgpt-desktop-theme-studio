@@ -30,7 +30,7 @@ The target is Windows 11 x64 with .NET 10 and Windows App SDK. Download the [lat
 - Simulated previews for comparing theme settings before export.
 - A fail-closed client adapter: it stays disabled until a ChatGPT build is verified.
 
-If this project is useful to you, a GitHub star helps other ChatGPT Desktop users find it. Bug reports and reproducible compatibility notes are welcome.
+If this project is useful to you, a GitHub star helps other ChatGPT Desktop users find it. [Report a bug](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=bug_report.yml), [share a compatibility result](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=compatibility_report.yml), or [request a feature](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=feature_request.yml). Please keep chat content, account data, private media, and personal file paths out of public reports.
 
 ## Build
 

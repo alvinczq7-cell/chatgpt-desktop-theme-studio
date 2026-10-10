@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible problem in Theme Studio.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report problems with Theme Studio here. Do not include chat content, account details, personal file paths, access tokens, or private media.
+  - type: input
+    id: app-version
+    attributes:
+      label: Theme Studio version
+      description: Include the release tag or commit if known.
+      placeholder: v0.1.1
+    validations:
+      required: true
+  - type: input
+    id: windows-version
+    attributes:
+      label: Windows version
+      description: Include Windows 11 edition and build if known.
+      placeholder: Windows 11 24H2, build 26100
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Startup or installation
+        - Theme editor or preview
+        - GIF or video playback
+        - Theme import or export
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: List the smallest set of steps that makes the issue happen.
+      placeholder: "1. Open...\n2. Choose...\n3. Observe..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Expected and actual behavior
+      placeholder: Describe what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Safe diagnostics
+      description: Add non-sensitive error text or logs. Remove usernames, local paths, chat content, and tokens first.
+      render: text
+    validations:
+      required: false
