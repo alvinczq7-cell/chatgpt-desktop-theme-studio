@@ -23,6 +23,7 @@ public sealed partial class MainWindow : Window
     private bool _previewReady;
     private bool _initialized;
     private bool _autoPaused;
+    private bool _hasUnsavedChanges;
     private DispatcherTimer? _playbackTimer;
 
     public MainWindow()
@@ -178,6 +179,7 @@ public sealed partial class MainWindow : Window
         _theme.Name = ThemeNameBox.Text.Trim() is { Length: > 0 } name ? name : "My theme";
         var result = await _library.SaveAsync(_theme, _themeRoot);
         _themeRoot = result.ThemeRoot;
+        _hasUnsavedChanges = false;
         StatusText.Text = "Theme saved locally.";
         await RefreshThemeListAsync();
         await ApplyPreviewAsync();
@@ -202,6 +204,7 @@ public sealed partial class MainWindow : Window
 
     private async void OnNewTheme(object sender, RoutedEventArgs e)
     {
+        if (!await ConfirmPendingChangesAsync()) return;
         _theme = new ThemeDocument { Name = "My theme" };
         var saved = await _library.SaveAsync(_theme);
         _themeRoot = saved.ThemeRoot;
@@ -214,6 +217,11 @@ public sealed partial class MainWindow : Window
     private async void OnLocalThemeChanged(object sender, SelectionChangedEventArgs e)
     {
         if (_loading || LocalThemesBox.SelectedItem is not ComboBoxItem selected) return;
+        if (!await ConfirmPendingChangesAsync())
+        {
+            RestoreThemeSelection();
+            return;
+        }
         var id = selected.Tag?.ToString();
         var theme = (await _library.ListAsync()).FirstOrDefault(x => x.Theme.Id == id);
         if (theme is null) return;
@@ -265,7 +273,16 @@ public sealed partial class MainWindow : Window
     private async void OnViewChanged(object sender, SelectionChangedEventArgs e)
     {
         if (ViewButtons.SelectedItem is not RadioButton selected) return;
-        _viewKey = selected.Tag?.ToString() ?? "chat";
+        var nextViewKey = selected.Tag?.ToString() ?? "chat";
+        if (nextViewKey == _viewKey) return;
+        if (!await ConfirmPendingChangesAsync())
+        {
+            var previous = ViewButtons.Items.OfType<RadioButton>()
+                .FirstOrDefault(x => string.Equals(x.Tag?.ToString(), _viewKey, StringComparison.Ordinal));
+            if (previous is not null) ViewButtons.SelectedItem = previous;
+            return;
+        }
+        _viewKey = nextViewKey;
         LoadEditorValues();
         await ApplyPreviewAsync();
     }
@@ -291,6 +308,7 @@ public sealed partial class MainWindow : Window
     {
         if (_loading) return;
         _theme.Name = ThemeNameBox.Text;
+        MarkUnsaved();
     }
 
     private void OnBackgroundKindChanged(object sender, SelectionChangedEventArgs e)
@@ -313,6 +331,7 @@ public sealed partial class MainWindow : Window
         };
         if (!matches) { background.AssetPath = ""; BackgroundFileBox.Text = "No media selected"; }
         background.Kind = newKind;
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -321,6 +340,7 @@ public sealed partial class MainWindow : Window
         if (_loading) return;
         _theme.Views[_viewKey].Background.Color = BackgroundColorBox.Text;
         _theme.Views[_viewKey].Background.GradientEndColor = GradientEndBox.Text;
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -332,6 +352,7 @@ public sealed partial class MainWindow : Window
         background.PositionY = (int)BackgroundPositionYSlider.Value;
         background.DimPercent = (int)DimSlider.Value;
         background.Blur = (int)BackgroundBlurSlider.Value;
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -340,6 +361,7 @@ public sealed partial class MainWindow : Window
         if (_loading || !_initialized) return;
         var background = _theme.Views[_viewKey].Background;
         background.Fit = FitBox.SelectedIndex switch { 1 => BackgroundFit.Contain, 2 => BackgroundFit.Fill, _ => BackgroundFit.Cover };
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -350,6 +372,7 @@ public sealed partial class MainWindow : Window
         surface.Opacity = (int)OpacitySlider.Value;
         surface.Blur = (int)SurfaceBlurSlider.Value;
         surface.CornerRadius = RadiusSlider.Value;
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -360,6 +383,7 @@ public sealed partial class MainWindow : Window
         surface.BackgroundColor = SurfaceBackgroundBox.Text;
         surface.ForegroundColor = SurfaceForegroundBox.Text;
         surface.FontFamily = FontBox.Text;
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -367,6 +391,7 @@ public sealed partial class MainWindow : Window
     {
         if (_loading || !_initialized) return;
         SelectedSurface().ControlState = (ControlStateBox.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "default";
+        MarkUnsaved();
         _ = ApplyPreviewAsync();
     }
 
@@ -420,6 +445,7 @@ public sealed partial class MainWindow : Window
     {
         var background = _theme.Views[_viewKey].Background;
         background.PausedByUser = !background.PausedByUser;
+        MarkUnsaved();
         PausePreviewButton.Content = LocalText(background.PausedByUser ? "Resume preview" : "Pause preview", background.PausedByUser ? "恢复预览" : "暂停预览");
         await ApplyPreviewAsync();
     }
@@ -442,6 +468,7 @@ public sealed partial class MainWindow : Window
     {
         try
         {
+            if (!await ConfirmPendingChangesAsync()) return;
             var picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".tstheme");
             InitializeWithWindow.Initialize(picker, WindowNative.GetWindowHandle(this));
@@ -506,4 +533,51 @@ public sealed partial class MainWindow : Window
     private static string LocalText(string english, string simplifiedChinese) =>
         System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("zh", StringComparison.OrdinalIgnoreCase)
             ? simplifiedChinese : english;
+
+    private void MarkUnsaved()
+    {
+        if (_hasUnsavedChanges) return;
+        _hasUnsavedChanges = true;
+        StatusText.Text = LocalText("Unsaved changes. Save before switching themes or views.", "有未保存的修改。切换主题或视图前请先保存。");
+    }
+
+    private async Task<bool> ConfirmPendingChangesAsync()
+    {
+        if (!_hasUnsavedChanges) return true;
+
+        var dialog = new ContentDialog
+        {
+            Title = LocalText("Save your changes?", "保存当前修改吗？"),
+            Content = LocalText("Your current theme has unsaved edits.", "当前主题还有未保存的修改。"),
+            PrimaryButtonText = LocalText("Save and continue", "保存并继续"),
+            CloseButtonText = LocalText("Keep editing", "继续编辑"),
+            DefaultButton = ContentDialogButton.Primary,
+            XamlRoot = ((FrameworkElement)Content).XamlRoot
+        };
+
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary) return false;
+        try
+        {
+            await SaveCurrentAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            StatusText.Text = LocalText($"Could not save theme: {ex.Message}", $"无法保存主题：{ex.Message}");
+            return false;
+        }
+    }
+
+    private void RestoreThemeSelection()
+    {
+        var wasLoading = _loading;
+        _loading = true;
+        try
+        {
+            LocalThemesBox.SelectedItem = LocalThemesBox.Items
+                .OfType<ComboBoxItem>()
+                .FirstOrDefault(x => string.Equals(x.Tag?.ToString(), _theme.Id, StringComparison.Ordinal));
+        }
+        finally { _loading = wasLoading; }
+    }
 }
