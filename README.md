@@ -10,7 +10,7 @@ A Windows companion app for designing and organizing local themes for the new Ch
 
 **The theme manager has passed a local Release build, six automated tests, package generation, installer build/install, and a 10-second launch check from both the portable and installed folders. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
 
-The target is Windows 11 x64 with .NET 10 and Windows App SDK. The first local package outputs are available under [GitHub Releases](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases) after the release workflow completes. See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
+The target is Windows 11 x64 with .NET 10 and Windows App SDK. Download the [v0.1.0 preview](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases/tag/v0.1.0). See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
 
 ## MVP features
 

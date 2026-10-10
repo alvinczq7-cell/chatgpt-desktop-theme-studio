@@ -15,10 +15,10 @@
 - Self-contained `win-x64` executable launched and remained active for 10 seconds.
 - Inno Setup 6.7.3 generated an installer; the per-user install, Start Menu shortcut, and installed executable launch were verified.
 - Portable ZIP, installer, sample packages, and SHA-256 checksums exist locally under ignored `artifacts/`.
+- GitHub Actions Windows CI and the `v0.1.0` Windows Release workflow passed. The release page contains the setup, portable ZIP, three sample themes, and checksums.
 
 ## Not verified or enabled
 
 - No ChatGPT desktop client build has passed end-to-end connection, render, use, and recovery checks. The adapter stays disabled; Safe launch is unavailable, and no styles are injected.
 - Dynamic backgrounds and pause policies have not had full runtime QA across battery, fullscreen, and reduced-motion scenarios.
-- The packages have not been tested on a clean Windows machine. The installer is unsigned.
-- GitHub Actions for the latest local changes and a tagged GitHub Release still need to complete.
+- The release has only been smoke-tested on the development machine, not on a clean Windows installation. The installer is unsigned.
