@@ -16,7 +16,7 @@ Want to try the moving background? Download [Aurora Motion](samples/packages/aur
 
 ## Current status
 
-**The theme manager has passed a local Release build, 12 automated tests, package generation, installer build/install, and a 10-second launch check from both the portable and installed folders. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
+**The theme manager has passed a local Release build, 13 automated tests, package generation, installer build/install, and a 10-second launch check from both the portable and installed folders. The live ChatGPT adapter remains unverified and disabled.** The manager supports a local theme library, package import/export, simulated preview, and animated backgrounds; it does not yet claim to apply themes live to ChatGPT.
 
 The target is Windows 11 x64 with .NET 10 and Windows App SDK. Download the [latest preview release](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/releases/latest). See the [progress checkpoint](docs/progress-2026-10-10.md) for the exact status.
 
@@ -28,7 +28,7 @@ The target is Windows 11 x64 with .NET 10 and Windows App SDK. Download the [lat
 - Silent looping with manual pause and power/accessibility pause rules.
 - Local theme packages with media included; no scripts or arbitrary CSS.
 - Simulated previews for comparing theme settings before export.
-- A fail-closed client adapter: it stays disabled until a ChatGPT build is verified.
+- A fail-closed client adapter: its local probe counts renderer pages without reading their URLs, and stays disabled until a ChatGPT build is verified.
 
 If this project is useful to you, a GitHub star helps other ChatGPT Desktop users find it. [Report a bug](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=bug_report.yml), [share a compatibility result](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=compatibility_report.yml), or [request a feature](https://github.com/alvinczq7-cell/chatgpt-desktop-theme-studio/issues/new?template=feature_request.yml). Please keep chat content, account data, private media, and personal file paths out of public reports.
 

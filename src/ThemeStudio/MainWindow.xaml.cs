@@ -476,14 +476,24 @@ public sealed partial class MainWindow : Window
         AdapterStatus.Text = LocalText("Checking loopback port 9335…", "正在检查本机回环端口 9335…");
         var result = await _probe.CheckAsync();
         var message = result.Responded
-            ? "A local debugging endpoint answered. It is not verified as ChatGPT, so theme application remains disabled."
+            ? result.PageTargetCount switch
+            {
+                0 => "The endpoint exposed no renderer pages. The client cannot be themed through this connection.",
+                > 0 => $"Found {result.PageTargetCount} renderer page(s), but the client is not verified. Theme application remains disabled.",
+                _ => "A local endpoint answered, but renderer pages could not be verified. Theme application remains disabled."
+            }
             : "No local debugging endpoint was found. The official client was not restarted.";
         var messageZh = result.Responded
-            ? "本机调试端点有响应，但尚未确认属于 ChatGPT，因此仍禁用主题应用。"
+            ? result.PageTargetCount switch
+            {
+                0 => "调试端点没有暴露渲染页面，无法通过此连接为客户端应用主题。",
+                > 0 => $"发现 {result.PageTargetCount} 个渲染页面，但客户端仍未验证，主题应用保持禁用。",
+                _ => "本机端点有响应，但无法确认渲染页面，主题应用保持禁用。"
+            }
             : "未发现本机调试端点；没有重启官方客户端。";
         AdapterStatus.Text = result.Browser is null ? LocalText(message, messageZh) : $"{result.Browser}: {LocalText(message, messageZh)}";
         AdapterStatus.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(
-            result.Responded ? Microsoft.UI.Colors.LightGreen : Microsoft.UI.Colors.Orange);
+            Microsoft.UI.Colors.Orange);
         StatusText.Text = result.Responded
             ? LocalText("A local debugging service answered, but its identity was not validated as ChatGPT.", "本机调试服务有响应，但未验证其属于 ChatGPT。")
             : LocalText("No local debugging service was found. The official client was not restarted.", "未发现本机调试服务；没有重启官方客户端。");

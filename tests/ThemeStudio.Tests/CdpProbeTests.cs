@@ -11,15 +11,37 @@ public sealed class CdpProbeTests
     [Fact]
     public async Task CheckAsync_AcceptsLoopbackEndpointAndReturnsBrowserIdentity()
     {
-        await using var server = await MockCdpServer.StartAsync(port => VersionJson(
-            $"ws://127.0.0.1:{port}/devtools/browser/test"));
+        await using var server = await MockCdpServer.StartAsync(port =>
+        [
+            ("/json/version", VersionJson($"ws://127.0.0.1:{port}/devtools/browser/test")),
+            ("/json/list", "[]")
+        ]);
         using var probe = new CdpProbe();
 
         var result = await probe.CheckAsync(server.Port);
 
         Assert.True(result.Responded);
         Assert.Equal("Chrome/155.0.8059.40", result.Browser);
-        Assert.Contains("does not verify the ChatGPT client", result.Message);
+        Assert.Equal(0, result.PageTargetCount);
+        Assert.Contains("no renderer page targets", result.Message);
+    }
+
+    [Fact]
+    public async Task CheckAsyncCountsPageTargetsWithoutReadingTheirUrls()
+    {
+        await using var server = await MockCdpServer.StartAsync(port =>
+        [
+            ("/json/version", VersionJson($"ws://127.0.0.1:{port}/devtools/browser/test")),
+            ("/json/list", "[{\"type\":\"page\",\"url\":\"https://chatgpt.com/c/private-thread\"},{\"type\":\"service_worker\"}]")
+        ]);
+        using var probe = new CdpProbe();
+
+        var result = await probe.CheckAsync(server.Port);
+
+        Assert.True(result.Responded);
+        Assert.Equal(1, result.PageTargetCount);
+        Assert.DoesNotContain("private-thread", result.Message);
+        Assert.Contains("identity and theme compatibility remain unverified", result.Message);
     }
 
     [Theory]
@@ -28,8 +50,10 @@ public sealed class CdpProbeTests
     [InlineData("ws://127.0.0.1:{1}/devtools/browser/test")]
     public async Task CheckAsync_RejectsNonLoopbackOrMismatchedDebuggerSocket(string socketTemplate)
     {
-        await using var server = await MockCdpServer.StartAsync(port => VersionJson(
-            socketTemplate.Replace("{0}", port.ToString()).Replace("{1}", (port + 1).ToString())));
+        await using var server = await MockCdpServer.StartAsync(port =>
+        [
+            ("/json/version", VersionJson(socketTemplate.Replace("{0}", port.ToString()).Replace("{1}", (port + 1).ToString())))
+        ]);
         using var probe = new CdpProbe();
 
         var result = await probe.CheckAsync(server.Port);
@@ -66,23 +90,28 @@ public sealed class CdpProbeTests
 
         public int Port { get; }
 
-        public static Task<MockCdpServer> StartAsync(Func<int, string> responseBody)
+        public static Task<MockCdpServer> StartAsync(Func<int, (string Path, string Body)[]> responses)
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
             var port = ((IPEndPoint)listener.LocalEndpoint).Port;
-            var body = Encoding.UTF8.GetBytes(responseBody(port));
+            var responseList = responses(port).ToDictionary(item => item.Path, item => Encoding.UTF8.GetBytes(item.Body));
             var requestTask = Task.Run(async () =>
             {
-                using var client = await listener.AcceptTcpClientAsync().WaitAsync(TimeSpan.FromSeconds(5));
-                await using var stream = client.GetStream();
-                using var reader = new StreamReader(stream, Encoding.ASCII, leaveOpen: true);
-                while (await reader.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(5)) is { Length: > 0 }) { }
-
-                var header = Encoding.ASCII.GetBytes(
-                    $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {body.Length}\r\nConnection: close\r\n\r\n");
-                await stream.WriteAsync(header);
-                await stream.WriteAsync(body);
+                foreach (var (path, body) in responseList)
+                {
+                    using var client = await listener.AcceptTcpClientAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                    await using var stream = client.GetStream();
+                    using var reader = new StreamReader(stream, Encoding.ASCII, leaveOpen: true);
+                    var requestLine = await reader.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                    while (await reader.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(5)) is { Length: > 0 }) { }
+                    var status = requestLine?.Split(' ').ElementAtOrDefault(1) == path ? "200 OK" : "404 Not Found";
+                    var responseBody = status.StartsWith("200", StringComparison.Ordinal) ? body : "[]"u8.ToArray();
+                    var header = Encoding.ASCII.GetBytes(
+                        $"HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {responseBody.Length}\r\nConnection: close\r\n\r\n");
+                    await stream.WriteAsync(header);
+                    await stream.WriteAsync(responseBody);
+                }
             });
 
             return Task.FromResult(new MockCdpServer(listener, port, requestTask));
